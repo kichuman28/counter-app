@@ -7,7 +7,6 @@ class IncrementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counterProvider = Provider.of<CounterProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -18,11 +17,15 @@ class IncrementScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                counterProvider.increment();
-              },
-              child: const Text('Increment Counter'),
+            Consumer<CounterProvider>(
+              builder: (context,counterProvider,child) {
+                return ElevatedButton(
+                  onPressed: () {
+                    counterProvider.increment();
+                  },
+                  child: const Text('Increment Counter'),
+                );
+              }
             ),
             const SizedBox(height: 20),
             ElevatedButton(

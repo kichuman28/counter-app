@@ -2,40 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'counter_provider.dart';
 
-class ResetScreen extends StatelessWidget {
-  const ResetScreen({super.key});
+class ResetScreen extends StatefulWidget {
+  @override
+  _ResetScreenState createState() => _ResetScreenState();
+}
+
+class _ResetScreenState extends State<ResetScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Set the counter to zero when the ResetScreen is inserted into the widget tree
+    context.read<CounterProvider>().reset();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final counterProvider = Provider.of<CounterProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reset Screen'),
+        title: Text('Reset Screen'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Reset the Counter',
-              style: TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                counterProvider.reset();
-              },
-              child: const Text('Set Counter to Zero'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Back to Home Screen'),
-            ),
-          ],
+        child: Consumer<CounterProvider>(
+          builder: (context, counterProvider, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Counter has been reset to zero',
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Back to Home Screen'),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

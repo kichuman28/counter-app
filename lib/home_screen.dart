@@ -9,43 +9,46 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counterProvider = Provider.of<CounterProvider>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Counter Value: ${counterProvider.count}',
-              style: const TextStyle(fontSize: 20),
+    return Consumer<CounterProvider>(
+      builder: (context,counterProvider,child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Home Screen'),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Counter Value: ${counterProvider.count}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const IncrementScreen()),
+                    );
+                  },
+                  child: const Text('Go to Increment Screen'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ResetScreen()),
+                    );
+                  },
+                  child: const Text('Go to Reset Screen'),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const IncrementScreen()),
-                );
-              },
-              child: const Text('Go to Increment Screen'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ResetScreen()),
-                );
-              },
-              child: const Text('Go to Reset Screen'),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }
